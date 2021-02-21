@@ -1,0 +1,82 @@
+<div id="app">
+  <h1>{{ message }}</h1>
+  <apexchart type="heatmap" :options="options" :series="series"/>
+</div>
+
+<!-- Vue library -->
+<script src="https://unpkg.com/vue"></script>
+<!-- ApexCharts libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.6.12/apexcharts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
+<!-- Rent Data -->
+<script src="https://annapamma.github.io/vue-heatmap-tutorial/rent-data-62015-62019.js"></script>
+
+<script>
+  Vue.component("apexchart", VueApexCharts);
+
+  const app = new Vue({
+    el: "#app",
+    data: {
+        message: "Manhattan Rent Prices",
+        options: {
+            theme: {
+                palette: 'palette10'
+            },
+            markers: {
+                size: 0,
+                fillColor: '#fff',
+                strokeWidth: 2,
+                strokeColor: '#333',
+                shape: 'circle',
+                radius: 2
+            },
+            xaxis: {
+                labels: {
+                    rotateAlways: true,
+                    rotate: -45,
+                    minHeight: 60,
+                    formatter: function(value, timestamp, index) {
+                        return index % 3 === 0 ? value : '';
+                    }
+                }
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            plotOptions: {
+                heatmap: {
+                    colorScale: {
+                        ranges: [
+                            {
+                                from: 1500,
+                                to: 1999,
+                                // color: '#0000ff',
+                                name: '$1500 - $1999',
+                            },
+                            {
+                                from: 2000,
+                                to: 3999,
+                                // color: '#00A100',
+                                name: '$2000 - $3999',
+                            },
+                            {
+                                from: 4000,
+                                to: 5999,
+                                // color: '#FFFF00',
+                                name: '$4000 - $5999',
+                            },
+                            {
+                                from: 6000,
+                                to: 8000,
+                                // color: '#FF0000',
+                                name: '$6000 - $8000',
+                            },
+                        ]
+                    }
+                }
+            }
+        },
+        series: rentData
+    },
+  });
+</script>
